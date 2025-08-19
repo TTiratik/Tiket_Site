@@ -12,7 +12,7 @@
 - 📈 **Статистика** - аналитика по жалобам для администраторов
 
 ## Технологии
-
+PIZDA
 - **Frontend**: Next.js 14, React, TypeScript, Tailwind CSS
 - **Backend**: Next.js API Routes, Neon PostgreSQL
 - **UI**: shadcn/ui компоненты
