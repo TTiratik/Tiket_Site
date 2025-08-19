@@ -8,7 +8,7 @@ import { AuthProvider } from "@/hooks/use-auth"
 export const metadata: Metadata = {
   title: "Система подачи жалоб",
   description: "Платформа для подачи и обработки жалоб",
-  generator: "Hoffman",
+  generator: "v0.app",
 }
 
 export default function RootLayout({

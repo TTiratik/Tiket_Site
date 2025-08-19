@@ -1,11 +1,11 @@
 {
   "functions": {
-    "api/api/**/*.ts": {
+    "app/api/**/*.ts": {
       "maxDuration": 30
     }
   },
   "regions": ["fra1"],
   "env": {
-    "DATABASE_URL": "postgresql://neondb_owner:npg_pouIqOL3av0y@ep-mute-shape-ad5g5inp-pooler.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require"
+    "DATABASE_URL": "@database_url"
   }
 }

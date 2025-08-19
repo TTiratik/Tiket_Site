@@ -1,5 +1,9 @@
 import { neon } from "@neondatabase/serverless"
 
+if (!process.env.DATABASE_URL) {
+  throw new Error("DATABASE_URL environment variable is not set")
+}
+
 const sql = neon(process.env.DATABASE_URL!)
 
 export interface User {
@@ -35,30 +39,45 @@ export interface ComplaintMessage {
 
 // Функции для работы с пользователями
 export async function getUserByEmail(email: string): Promise<User | null> {
-  const result = await sql`
-    SELECT * FROM neon_auth.users_sync 
-    WHERE email = ${email}
-    LIMIT 1
-  `
-  return result[0] || null
+  try {
+    const result = await sql`
+      SELECT * FROM neon_auth.users_sync 
+      WHERE email = ${email}
+      LIMIT 1
+    `
+    return result[0] || null
+  } catch (error) {
+    console.error("Database error in getUserByEmail:", error)
+    return null
+  }
 }
 
 export async function getUserById(id: string): Promise<User | null> {
-  const result = await sql`
-    SELECT * FROM neon_auth.users_sync 
-    WHERE id = ${id}
-    LIMIT 1
-  `
-  return result[0] || null
+  try {
+    const result = await sql`
+      SELECT * FROM neon_auth.users_sync 
+      WHERE id = ${id}
+      LIMIT 1
+    `
+    return result[0] || null
+  } catch (error) {
+    console.error("Database error in getUserById:", error)
+    return null
+  }
 }
 
 export async function createUser(id: string, email: string, name: string): Promise<User> {
-  const result = await sql`
-    INSERT INTO neon_auth.users_sync (id, email, name, role, created_at, updated_at)
-    VALUES (${id}, ${email}, ${name}, 'user', NOW(), NOW())
-    RETURNING *
-  `
-  return result[0]
+  try {
+    const result = await sql`
+      INSERT INTO neon_auth.users_sync (id, email, name, role, created_at, updated_at)
+      VALUES (${id}, ${email}, ${name}, 'user', NOW(), NOW())
+      RETURNING *
+    `
+    return result[0]
+  } catch (error) {
+    console.error("Database error in createUser:", error)
+    throw new Error("Failed to create user")
+  }
 }
 
 // Функции для работы с жалобами
